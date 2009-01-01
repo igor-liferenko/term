@@ -1,9 +1,4 @@
 %&17pt
-\pdfpagewidth=297mm
-\pdfpageheight=210mm
-\pdfhorigin=1in
-\pdfvorigin=1in
-
 \input quire
 \shoutline=0pt
 \shstaplewidth=0pt
@@ -11,10 +6,15 @@
 \shfootline={}
 \quire{32}
 
-\shhtotal=\pdfpagewidth
+\pdfpagewidth=297mm
+\pdfpageheight=210mm
+\pdfhorigin=1in
+\pdfvorigin=1in
 \shvoffset=-1in
-\htotal=423pt
-\vtotal=595pt
+\shhtotal=\pdfpagewidth
+\htotal=\pdfpagewidth \divide\htotal by2
+\vtotal=\pdfpageheight
+
 \horigin=3.5mm
 \vorigin=2.5mm
 \hsize=\htotal \advance\hsize by-2\horigin
