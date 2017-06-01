@@ -1,5 +1,6 @@
-convert term.c to term.w (for testing build weston from debian package - see below)
-after that, read term.ps and understand how to get rid of stuff which is in libtoytoolkit.a
+Convert term.c to term.w (for testing, build "weston" from source - see below).
+After that, read term.ps and understand how to integrate necessary stuff from libtoytoolkit.a
+directly to term.w (this library is what building "weston" from source is necessary for).
 
 HOW TO BUILD:
 
