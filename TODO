@@ -1,0 +1,2 @@
+convert term.c to term.w (for testing build weston from debian package)
+after that, read term.ps and understand how to get rid of stuff which is in libtoytoolkit.a
