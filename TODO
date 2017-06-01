@@ -1,2 +1,10 @@
-convert term.c to term.w (for testing build weston from debian package)
+convert term.c to term.w (for testing build weston from debian package - see below)
 after that, read term.ps and understand how to get rid of stuff which is in libtoytoolkit.a
+
+HOW TO BUILD:
+
+cd /usr/local/src/
+apt-get source weston
+cd weston-*
+apt-get build-dep weston
+dpkg-buildpackage -uc -us -b -rfakeroot

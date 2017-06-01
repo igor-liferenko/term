@@ -43,9 +43,9 @@
 
 #include <wayland-client.h>
 
-#include "shared/config-parser.h"
-#include "shared/helpers.h"
-#include "shared/xalloc.h"
+#include "config-parser.h"
+#include "helpers.h"
+#include "xalloc.h"
 #include "window.h"
 
 static int option_fullscreen;
