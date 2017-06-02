@@ -916,7 +916,7 @@ struct color_scheme DEFAULT_COLORS = {
 		{1,    1,    1,    1}  /* white */
 	},
 	0,                             /* black border */
-	{0, 15, 0, }                    /* bg:black (0), fg:light gray (7)  */
+	{0, 15, 0, }                    /* fg:black (0), bg:white (15) */
 };
 
 static void
