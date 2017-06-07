@@ -1,27 +1,4 @@
 @ @c
-/*
- * Copyright © 2008 Kristian Høgsberg
- *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice (including the next
- * paragraph) shall be included in all copies or substantial portions of the
- * Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- */
-
 #include "config.h"
 
 #include <stdbool.h>
@@ -64,16 +41,17 @@ terminal_destroy(struct terminal *terminal);
 static int
 terminal_run(struct terminal *terminal, const char *path);
 
-#define TERMINAL_DRAW_SINGLE_WIDE_CHARACTERS    \
-    " !\"#$%&'()*+,-./"                         \
-    "0123456789"                                \
-    ":;<=>?@@"                                   \
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"                \
-    "[\\]^_`"                                   \
-    "abcdefghijklmnopqrstuvwxyz"                \
-    "{|}~"                                      \
+@ @d TERMINAL_DRAW_SINGLE_WIDE_CHARACTERS
+    " !\"#$%&'()*+,-./"
+    "0123456789"
+    ":;<=>?@@"
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    "[\\]^_`"
+    "abcdefghijklmnopqrstuvwxyz"
+    "{|}~"
     ""
 
+@ @c
 #define MOD_SHIFT	0x01
 #define MOD_ALT		0x02
 #define MOD_CTRL	0x04
@@ -127,6 +105,7 @@ init_state_machine(struct utf8_state_machine *machine)
 	machine->s.ch = 0;
 }
 
+@ @c
 static enum utf8_state
 utf8_next_char(struct utf8_state_machine *machine, unsigned char c)
 {
@@ -208,6 +187,7 @@ utf8_next_char(struct utf8_state_machine *machine, unsigned char c)
 	return machine->state;
 }
 
+@ @c
 static uint32_t
 get_unicode(union utf8_char utf8)
 {
@@ -239,51 +219,57 @@ struct char_sub {
 	union utf8_char match;
 	union utf8_char replace;
 };
-/* Set last char_sub match to NULL char */
+
+@ Set last |char_sub| match to NULL char.
+
+@c
 typedef struct char_sub *character_set;
 
 struct char_sub CS_US[] = {
 	{{{0, }}, {{0, }}}
 };
 static struct char_sub CS_UK[] = {
-	{{{'#', 0, }}, {{0xC2, 0xA3, 0, }}}, /* POUND: £ */
-	{{{0, }}, {{0, }}}
-};
-static struct char_sub CS_SPECIAL[] = {
-	{{{'`', 0, }}, {{0xE2, 0x99, 0xA6, 0}}}, /* diamond: ♦ */
-	{{{'a', 0, }}, {{0xE2, 0x96, 0x92, 0}}}, /* 50% cell: ▒ */
-	{{{'b', 0, }}, {{0xE2, 0x90, 0x89, 0}}}, /* HT: ␉ */
-	{{{'c', 0, }}, {{0xE2, 0x90, 0x8C, 0}}}, /* FF: ␌ */
-	{{{'d', 0, }}, {{0xE2, 0x90, 0x8D, 0}}}, /* CR: ␍ */
-	{{{'e', 0, }}, {{0xE2, 0x90, 0x8A, 0}}}, /* LF: ␊ */
-	{{{'f', 0, }}, {{0xC2, 0xB0, 0, }}}, /* Degree: ° */
-	{{{'g', 0, }}, {{0xC2, 0xB1, 0, }}}, /* Plus/Minus: ± */
-	{{{'h', 0, }}, {{0xE2, 0x90, 0xA4, 0}}}, /* NL: ␤ */
-	{{{'i', 0, }}, {{0xE2, 0x90, 0x8B, 0}}}, /* VT: ␋ */
-	{{{'j', 0, }}, {{0xE2, 0x94, 0x98, 0}}}, /* CN_RB: ┘ */
-	{{{'k', 0, }}, {{0xE2, 0x94, 0x90, 0}}}, /* CN_RT: ┐ */
-	{{{'l', 0, }}, {{0xE2, 0x94, 0x8C, 0}}}, /* CN_LT: ┌ */
-	{{{'m', 0, }}, {{0xE2, 0x94, 0x94, 0}}}, /* CN_LB: └ */
-	{{{'n', 0, }}, {{0xE2, 0x94, 0xBC, 0}}}, /* CROSS: ┼ */
-	{{{'o', 0, }}, {{0xE2, 0x8E, 0xBA, 0}}}, /* Horiz. Scan Line 1: ⎺ */
-	{{{'p', 0, }}, {{0xE2, 0x8E, 0xBB, 0}}}, /* Horiz. Scan Line 3: ⎻ */
-	{{{'q', 0, }}, {{0xE2, 0x94, 0x80, 0}}}, /* Horiz. Scan Line 5: ─ */
-	{{{'r', 0, }}, {{0xE2, 0x8E, 0xBC, 0}}}, /* Horiz. Scan Line 7: ⎼ */
-	{{{'s', 0, }}, {{0xE2, 0x8E, 0xBD, 0}}}, /* Horiz. Scan Line 9: ⎽ */
-	{{{'t', 0, }}, {{0xE2, 0x94, 0x9C, 0}}}, /* TR: ├ */
-	{{{'u', 0, }}, {{0xE2, 0x94, 0xA4, 0}}}, /* TL: ┤ */
-	{{{'v', 0, }}, {{0xE2, 0x94, 0xB4, 0}}}, /* TU: ┴ */
-	{{{'w', 0, }}, {{0xE2, 0x94, 0xAC, 0}}}, /* TD: ┬ */
-	{{{'x', 0, }}, {{0xE2, 0x94, 0x82, 0}}}, /* V: │ */
-	{{{'y', 0, }}, {{0xE2, 0x89, 0xA4, 0}}}, /* LE: ≤ */
-	{{{'z', 0, }}, {{0xE2, 0x89, 0xA5, 0}}}, /* GE: ≥ */
-	{{{'{', 0, }}, {{0xCF, 0x80, 0, }}}, /* PI: π */
-	{{{'|', 0, }}, {{0xE2, 0x89, 0xA0, 0}}}, /* NEQ: ≠ */
-	{{{'}', 0, }}, {{0xC2, 0xA3, 0, }}}, /* POUND: £ */
-	{{{'~', 0, }}, {{0xE2, 0x8B, 0x85, 0}}}, /* DOT: ⋅ */
+	{{{'#', 0, }}, {{0xC2, 0xA3, 0, }}}, /* POUND */
 	{{{0, }}, {{0, }}}
 };
 
+@ @c
+static struct char_sub CS_SPECIAL[] = {
+	{{{'`', 0, }}, {{0xE2, 0x99, 0xA6, 0}}}, /* diamond */
+	{{{'a', 0, }}, {{0xE2, 0x96, 0x92, 0}}}, /* 50 percent cell */
+	{{{'b', 0, }}, {{0xE2, 0x90, 0x89, 0}}}, /* HT */
+	{{{'c', 0, }}, {{0xE2, 0x90, 0x8C, 0}}}, /* FF */
+	{{{'d', 0, }}, {{0xE2, 0x90, 0x8D, 0}}}, /* CR */
+	{{{'e', 0, }}, {{0xE2, 0x90, 0x8A, 0}}}, /* LF */
+	{{{'f', 0, }}, {{0xC2, 0xB0, 0, }}}, /* Degree */
+	{{{'g', 0, }}, {{0xC2, 0xB1, 0, }}}, /* Plus Minus */
+	{{{'h', 0, }}, {{0xE2, 0x90, 0xA4, 0}}}, /* NL */
+	{{{'i', 0, }}, {{0xE2, 0x90, 0x8B, 0}}}, /* VT */
+	{{{'j', 0, }}, {{0xE2, 0x94, 0x98, 0}}}, /* CN\_RB */
+	{{{'k', 0, }}, {{0xE2, 0x94, 0x90, 0}}}, /* CN\_RT */
+	{{{'l', 0, }}, {{0xE2, 0x94, 0x8C, 0}}}, /* CN\_LT */
+	{{{'m', 0, }}, {{0xE2, 0x94, 0x94, 0}}}, /* CN\_LB */
+	{{{'n', 0, }}, {{0xE2, 0x94, 0xBC, 0}}}, /* CROSS */
+	{{{'o', 0, }}, {{0xE2, 0x8E, 0xBA, 0}}}, /* Horiz. Scan Line 1 */
+	{{{'p', 0, }}, {{0xE2, 0x8E, 0xBB, 0}}}, /* Horiz. Scan Line 3 */
+	{{{'q', 0, }}, {{0xE2, 0x94, 0x80, 0}}}, /* Horiz. Scan Line 5 */
+	{{{'r', 0, }}, {{0xE2, 0x8E, 0xBC, 0}}}, /* Horiz. Scan Line 7 */
+	{{{'s', 0, }}, {{0xE2, 0x8E, 0xBD, 0}}}, /* Horiz. Scan Line 9 */
+	{{{'t', 0, }}, {{0xE2, 0x94, 0x9C, 0}}}, /* TR */
+	{{{'u', 0, }}, {{0xE2, 0x94, 0xA4, 0}}}, /* TL */
+	{{{'v', 0, }}, {{0xE2, 0x94, 0xB4, 0}}}, /* TU */
+	{{{'w', 0, }}, {{0xE2, 0x94, 0xAC, 0}}}, /* TD */
+	{{{'x', 0, }}, {{0xE2, 0x94, 0x82, 0}}}, /* V */
+	{{{'y', 0, }}, {{0xE2, 0x89, 0xA4, 0}}}, /* LE */
+	{{{'z', 0, }}, {{0xE2, 0x89, 0xA5, 0}}}, /* GE */
+	{{{'{', 0, }}, {{0xCF, 0x80, 0, }}}, /* PI */
+	{{{'|', 0, }}, {{0xE2, 0x89, 0xA0, 0}}}, /* NEQ */
+	{{{'}', 0, }}, {{0xC2, 0xA3, 0, }}}, /* POUND */
+	{{{'~', 0, }}, {{0xE2, 0x8B, 0x85, 0}}}, /* DOT */
+	{{{0, }}, {{0, }}}
+};
+
+@ @c
 static void
 apply_char_set(character_set cs, union utf8_char *utf8)
 {
@@ -304,7 +290,10 @@ struct key_map {
 	char escape;
 	char code;
 };
-/* Set last key_sub sym to NULL */
+
+@ Set last |key_sub| sym to NULL.
+
+@c
 typedef struct key_map *keyboard_mode;
 
 static struct key_map KM_NORMAL[] = {
@@ -316,6 +305,8 @@ static struct key_map KM_NORMAL[] = {
 	{ XKB_KEY_End,   1, '[', 'F' },
 	{ 0, 0, 0, 0 }
 };
+
+@ @c
 static struct key_map KM_APPLICATION[] = {
 	{ XKB_KEY_Left,          1, 'O', 'D' },
 	{ XKB_KEY_Right,         1, 'O', 'C' },
@@ -332,6 +323,7 @@ static struct key_map KM_APPLICATION[] = {
 	{ 0, 0, 0, 0 }
 };
 
+@ @c
 static int
 function_key_response(char escape, int num, uint32_t modifiers,
 		      char code, char *response)
@@ -357,8 +349,10 @@ function_key_response(char escape, int num, uint32_t modifiers,
 	else				return len;
 }
 
-/* returns the number of bytes written into response,
- * which must have room for MAX_RESPONSE bytes */
+@ Returns the number of bytes written into response,
+which must have room for |MAX_RESPONSE| bytes.
+
+@c
 static int
 apply_key_map(keyboard_mode mode, int sym, uint32_t modifiers, char *response)
 {
@@ -843,7 +837,8 @@ update_title(struct terminal *terminal)
 {
 	if (window_is_resizing(terminal->window)) {
 		char *p;
-		if (asprintf(&p, "%s — [%dx%d]", terminal->title, terminal->width, terminal->height) > 0) {
+		if (asprintf(&p, "%s — [%dx%d]", terminal->title, terminal->width,
+		  terminal->height) > 0) {
 			window_set_title(terminal->window, p);
 			free(p);
 		}
@@ -2004,6 +1999,7 @@ handle_char(struct terminal *terminal, union utf8_char utf8)
 		terminal->last_char = utf8;
 }
 
+@ @c
 static void
 escape_append_utf8(struct terminal *terminal, union utf8_char utf8)
 {
@@ -2523,7 +2519,10 @@ key_handler(struct window *window, struct input *input, uint32_t time,
 			if (terminal->mode & MODE_ALT_SENDS_ESC) {
 				ch[len++] = 0x1b;
 			} else {
+#if 1==0
 				sym = sym | 0x80;
+#endif
+				sym = 0x02;
 				convert_utf8 = false;
 			}
 		}
@@ -2747,6 +2746,7 @@ click_handler(struct widget *widget, struct terminal *terminal,
 			widget_schedule_redraw(widget);
 }
 
+@ @c
 static void
 button_handler(struct widget *widget,
 	       struct input *input, uint32_t time,
@@ -2895,6 +2895,7 @@ touch_motion_handler(struct widget *widget, struct input *input,
 	}
 }
 
+@ @c
 #ifndef howmany
 #define howmany(x, y) (((x) + ((y) - 1)) / (y))
 #endif

@@ -1,3 +1,10 @@
-*.c
-*.o
 term
+*.o
+*.c
+*.dvi
+*.idx
+*.log
+*.ps
+*.scn
+*.tex
+*.toc
