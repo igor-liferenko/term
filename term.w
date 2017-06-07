@@ -1,3 +1,4 @@
+@ @c
 /*
  * Copyright © 2008 Kristian Høgsberg
  *
@@ -66,7 +67,7 @@ terminal_run(struct terminal *terminal, const char *path);
 #define TERMINAL_DRAW_SINGLE_WIDE_CHARACTERS    \
     " !\"#$%&'()*+,-./"                         \
     "0123456789"                                \
-    ":;<=>?@"                                   \
+    ":;<=>?@@"                                   \
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"                \
     "[\\]^_`"                                   \
     "abcdefghijklmnopqrstuvwxyz"                \
@@ -1333,7 +1334,7 @@ handle_escape(struct terminal *terminal)
 	}
 
 	switch (*p) {
-	case '@':    /* ICH - Insert <count> blank characters */
+	case '@@':    /* ICH - Insert <count> blank characters */
 		count = set[0] ? args[0] : 1;
 		if (count == 0) count = 1;
 		terminal_shift_line(terminal, count);
@@ -2100,7 +2101,7 @@ terminal_data(struct terminal *terminal, const char *data, size_t length)
 					terminal->state = escape_state_normal;
 			}
 
-			if (isalpha(utf8.byte[0]) || utf8.byte[0] == '@' ||
+			if (isalpha(utf8.byte[0]) || utf8.byte[0] == '@@' ||
 				utf8.byte[0] == '`')
 			{
 				terminal->state = escape_state_normal;
@@ -2578,7 +2579,7 @@ keyboard_focus_handler(struct window *window,
 
 static int wordsep(int ch)
 {
-	const char extra[] = "-,./?%&#:_=+@~";
+	const char extra[] = "-,./?%&#:_=+@@~";
 
 	if (ch > 127 || ch < 0)
 		return 1;
