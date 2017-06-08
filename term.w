@@ -212,7 +212,7 @@ static bool
 is_wide(union utf8_char utf8)
 {
 	uint32_t unichar = get_unicode(utf8);
-	return wcwidth(unichar) > 1;
+	return wcwidth(unichar) > 1; /* provided by gnulib */
 }
 
 struct char_sub {
@@ -323,7 +323,9 @@ static struct key_map KM_APPLICATION[] = {
 	{ 0, 0, 0, 0 }
 };
 
-@ @c
+@ @d MOD_ALT_MASK 0x02
+
+@c
 static int
 function_key_response(char escape, int num, uint32_t modifiers,
 		      char code, char *response)
@@ -1993,7 +1995,7 @@ handle_char(struct terminal *terminal, union utf8_char utf8)
 
 	/* cursor jump for wide character. */
 	if (is_wide(utf8))
-		row[terminal->column++].ch = 0x200B; /* space glyph */
+		row[terminal->column++].ch = 0x200B; /* zero-width space */
 
 	if (utf8.ch != terminal->last_char.ch)
 		terminal->last_char = utf8;
@@ -3068,9 +3070,7 @@ int main(int argc, char *argv[])
 	struct weston_config *config;
 	struct weston_config_section *s;
 
-	/* as wcwidth is locale-dependent,
-	   wcwidth needs setlocale call to function properly. */
-	setlocale(LC_ALL, "");
+	setlocale(LC_CTYPE, "C.UTF-8"); /* used for |wcwidth| */
 
 	option_shell = getenv("SHELL");
 	if (!option_shell)
