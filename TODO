@@ -1,1 +1,2 @@
 implement -x option like in gnome-terminal and remove it from /usr/local/bin/gnome-terminal
+make Ctrl+p et al. work in less's search prompt
