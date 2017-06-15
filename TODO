@@ -1,2 +1,4 @@
 implement -x option like in gnome-terminal and remove it from /usr/local/bin/gnome-terminal
 make Ctrl+p et al. work in less's search prompt
+
+for copy-pastng see https://wayland.freedesktop.org/docs/html/ch04.html "Data sharing between clients"
