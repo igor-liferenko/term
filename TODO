@@ -1,3 +1,5 @@
+add more @ @c sections in order that cweave will work
+
 implement -x option like in gnome-terminal and remove it from /usr/local/bin/gnome-terminal
 make Ctrl+p et al. work in less's search prompt
 
