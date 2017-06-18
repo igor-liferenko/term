@@ -417,6 +417,7 @@ enum escape_state {
 #define ESC_FLAG_DQUOTE	0x20
 #define ESC_FLAG_SPACE	0x40
 
+@ @c
 enum {
 	SELECT_NONE,
 	SELECT_CHAR,
@@ -493,6 +494,7 @@ terminal_init_tabs(struct terminal *terminal)
 	}
 }
 
+@ @c
 static void
 terminal_init(struct terminal *terminal)
 {
@@ -573,6 +575,7 @@ union decoded_attr {
 	uint32_t key;
 };
 
+@ @c
 static void
 terminal_decode_attr(struct terminal *terminal, int row, int col,
 		     union decoded_attr *decoded)
@@ -696,6 +699,7 @@ terminal_scroll_window(struct terminal *terminal, int d)
 	}
 }
 
+@ @c
 static void
 terminal_scroll(struct terminal *terminal, int d)
 {
@@ -834,6 +838,7 @@ terminal_resize_cells(struct terminal *terminal,
 	ioctl(terminal->master, TIOCSWINSZ, &ws);
 }
 
+@ @c
 static void
 update_title(struct terminal *terminal)
 {
@@ -917,6 +922,7 @@ struct color_scheme DEFAULT_COLORS = {
 	{0, 15, 0, }                    /* fg:black (0), bg:white (15) */
 };
 
+@ @c
 static void
 terminal_set_color(struct terminal *terminal, cairo_t *cr, int index)
 {
@@ -1025,7 +1031,7 @@ glyph_run_add(struct glyph_run *run, int x, int y, union utf8_char *c)
 	run->count += num_glyphs;
 }
 
-
+@ @c
 static void
 redraw_handler(struct widget *widget, void *data)
 {
@@ -1157,6 +1163,7 @@ redraw_handler(struct widget *widget, void *data)
 	}
 }
 
+@ @c
 static void
 terminal_write(struct terminal *terminal, const char *data, size_t length)
 {
@@ -1274,6 +1281,7 @@ handle_dcs(struct terminal *terminal)
 {
 }
 
+@ @c
 static void
 handle_osc(struct terminal *terminal)
 {
@@ -1302,6 +1310,7 @@ handle_osc(struct terminal *terminal)
 	}
 }
 
+@ @c
 static void
 handle_escape(struct terminal *terminal)
 {
@@ -1525,6 +1534,7 @@ handle_escape(struct terminal *terminal)
 		}
 		terminal->column++;
 		break;
+@ @c
 	case '`':    /* HPA - Move cursor to <y> column in current row */
 		y = set[0] ? args[0] : 1;
 		y = y <= 0 ? 1 : y > terminal->width ? terminal->width : y;
@@ -1684,6 +1694,7 @@ handle_escape(struct terminal *terminal)
 	}
 }
 
+@ @c
 static void
 handle_non_csi_escape(struct terminal *terminal, char code)
 {
@@ -1789,6 +1800,7 @@ handle_special_escape(struct terminal *terminal, char special, char code)
 	}
 }
 
+@ @c
 static void
 handle_sgr(struct terminal *terminal, int code)
 {
@@ -1861,6 +1873,7 @@ handle_sgr(struct terminal *terminal, int code)
 	}
 }
 
+@ @c
 /* Returns 1 if c was special, otherwise 0 */
 static int
 handle_special_char(struct terminal *terminal, char c)
@@ -2332,6 +2345,7 @@ handle_bound_key(struct terminal *terminal,
 	}
 }
 
+@ @c
 static void
 key_handler(struct window *window, struct input *input, uint32_t time,
 	    uint32_t key, uint32_t sym, enum wl_keyboard_key_state state,
@@ -2569,6 +2583,7 @@ key_handler(struct window *window, struct input *input, uint32_t time,
 	}
 }
 
+@ @c
 static void
 keyboard_focus_handler(struct window *window,
 		       struct input *device, void *data)
@@ -3002,6 +3017,7 @@ terminal_destroy(struct terminal *terminal)
 	free(terminal);
 }
 
+@ @c
 static void
 io_handler(struct task *task, uint32_t events)
 {
