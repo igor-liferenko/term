@@ -1202,7 +1202,7 @@ handle_term_parameter(struct terminal *terminal, int code, int sr)
 			if (sr)
 				terminal_resize(terminal, 132, 24);
 			else
-				terminal_resize(terminal, 80, 24);
+				terminal_resize(terminal, 100, 24);
 
 			/* set columns, but also home cursor and clear screen */
 			terminal->row = 0; terminal->column = 0;
@@ -2995,7 +2995,7 @@ terminal_create(struct display *display)
 	cairo_surface_destroy(surface);
 
 	terminal_resize(terminal, 20, 5); /* Set minimum size first */
-	terminal_resize(terminal, 80, 25);
+	terminal_resize(terminal, 100, 25);
 
 	wl_list_insert(terminal_list.prev, &terminal->link);
 
@@ -3066,7 +3066,7 @@ terminal_run(struct terminal *terminal, const char *path)
 	if (option_fullscreen)
 		window_set_fullscreen(terminal->window, 1);
 	else
-		terminal_resize(terminal, 80, 24);
+		terminal_resize(terminal, 100, 24);
 
 	return 0;
 }
