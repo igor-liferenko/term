@@ -3100,7 +3100,7 @@ int main(int argc, char *argv[])
 	weston_config_section_get_string(s, "font", &option_font, "mono");
 	weston_config_section_get_int(s, "font-size", &option_font_size, 14);
 	weston_config_section_get_string(s, "term", &option_term, "xterm");
-	weston_config_section_get_int(s, "width", &option_width, 80);
+	weston_config_section_get_int(s, "width", &option_width, 100);
 	weston_config_destroy(config);
 
 	if (parse_options(terminal_options,
