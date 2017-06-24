@@ -3066,7 +3066,7 @@ terminal_run(struct terminal *terminal, const char *path)
 			 EPOLLIN | EPOLLHUP, &terminal->io_task);
 
 	if (option_fullscreen)
-		window_set_fullscreen(terminal->window, 1);
+		window_set_fullscreen(terminal->window, 1); /* TODO: change this to be option_height and option_width size and use --fullscreen argument - this is to make gnome not to auto-maximize it */
 	else
 		terminal_resize(terminal, option_width, option_height);
 
