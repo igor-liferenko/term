@@ -1,0 +1,1 @@
+gsettings set org.gnome.shell.overrides edge-tiling false
