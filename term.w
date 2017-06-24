@@ -3066,7 +3066,7 @@ terminal_run(struct terminal *terminal, const char *path)
 	if (option_fullscreen)
 		window_set_fullscreen(terminal->window, 1);
 	else
-		terminal_resize(terminal, 100, 24);
+		terminal_resize(terminal, 80, 24);
 
 	return 0;
 }
