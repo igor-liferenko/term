@@ -30,7 +30,6 @@ static int option_fullscreen;
 static char *option_font;
 static int option_font_size;
 int option_width;
-int option_height;
 static char *option_term;
 static char *option_shell;
 
@@ -864,15 +863,25 @@ resize_handler(struct widget *widget,
 	int32_t columns, rows, m;
 
 	m = 2 * terminal->margin;
-	columns = (width - m) / (int32_t) terminal->average_width;
+	columns = option_width;
+#ifdef HOME
+	rows = 43;
+#elif NOTEBOOK
+	rows=30;
+#else
 	rows = (height - m) / (int32_t) terminal->extents.height;
+#endif
 
+#ifdef WORK
 	if (!window_is_fullscreen(terminal->window) &&
 	    !window_is_maximized(terminal->window)) {
+#endif
 		width = columns * terminal->average_width + m;
 		height = rows * terminal->extents.height + m;
 		widget_set_size(terminal->widget, width, height);
+#ifdef WORK
 	}
+#endif
 
 	terminal_resize_cells(terminal, columns, rows);
 	update_title(terminal);
@@ -3068,7 +3077,13 @@ terminal_run(struct terminal *terminal, const char *path)
 	if (option_fullscreen)
 		window_set_fullscreen(terminal->window, 1);
 	else
-		terminal_resize(terminal, option_width, option_height);
+#ifdef HOME
+		terminal_resize(terminal, option_width, 43);
+#elif NOTEBOOK
+                terminal_resize(terminal, option_width, 30);
+#else
+		terminal_resize(terminal, option_width, 24);
+#endif
 
 	return 0;
 }
@@ -3079,7 +3094,6 @@ static const struct weston_option terminal_options[] = {
 	{ WESTON_OPTION_INTEGER, "font-size", 0, &option_font_size },
 	{ WESTON_OPTION_STRING, "shell", 0, &option_shell },
         { WESTON_OPTION_INTEGER, "width", 0, &option_width },
-        { WESTON_OPTION_INTEGER, "height", 0, &option_height },
 };
 
 int main(int argc, char *argv[])
@@ -3103,7 +3117,6 @@ int main(int argc, char *argv[])
 	weston_config_section_get_int(s, "font-size", &option_font_size, 14);
 	weston_config_section_get_string(s, "term", &option_term, "xterm");
 	weston_config_section_get_int(s, "width", &option_width, 100);
-        weston_config_section_get_int(s, "height", &option_height, 24);
 	weston_config_destroy(config);
 
 	if (parse_options(terminal_options,
