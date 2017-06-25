@@ -876,23 +876,6 @@ state_changed_handler(struct window *window, void *data)
 	update_title(terminal);
 }
 
-static void
-terminal_resize(struct terminal *terminal, int columns, int rows)
-{
-	int32_t width, height, m;
-
-	if (window_is_fullscreen(terminal->window) ||
-	    window_is_maximized(terminal->window)) {
-printf("gotcha\n");
-		return;
-}
-	m = 2 * terminal->margin;
-	width = columns * terminal->average_width + m;
-	height = rows * terminal->extents.height + m;
-
-	window_frame_set_child_size(terminal->widget, width, height);
-}
-
 struct color_scheme DEFAULT_COLORS = {
 	{
 		{0,    0,    0,    1}, /* black */
@@ -1192,11 +1175,6 @@ handle_term_parameter(struct terminal *terminal, int code, int sr)
 			terminal->g1 = CS_US;
 			terminal->cs = terminal->g0;
 			break;
-		case 3:  /* DECCOLM */
-			if (sr)
-				terminal_resize(terminal, 132, 24);
-			else
-				terminal_resize(terminal, 80, 24);
 
 			/* set columns, but also home cursor and clear screen */
 			terminal->row = 0; terminal->column = 0;
@@ -1644,11 +1622,6 @@ handle_escape(struct terminal *terminal)
 						       args[2], args[1]);
 			}
 			break;
-		case 8:  /* resize ch */
-			if (set[1] && set[2]) {
-				terminal_resize(terminal, args[2], args[1]);
-			}
-			break;
 		case 13: /* report position */
 			widget_get_allocation(terminal->widget, &allocation);
 			snprintf(response, MAX_RESPONSE, "\e[3;%d;%dt",
@@ -1670,12 +1643,6 @@ handle_escape(struct terminal *terminal)
 			snprintf(response, MAX_RESPONSE, "\e]l%s\e\\",
 				 window_get_title(terminal->window));
 			terminal_write(terminal, response, strlen(response));
-			break;
-		default:
-			if (args[0] >= 24)
-				terminal_resize(terminal, terminal->width, args[0]);
-			else
-				fprintf(stderr, "Unimplemented windowOp %d\n", args[0]);
 			break;
 		}
 	case 'u':    /* Restore cursor location */
@@ -2978,9 +2945,6 @@ terminal_create(struct display *display)
 
 	cairo_destroy(cr);
 	cairo_surface_destroy(surface);
-
-	terminal_resize(terminal, 20, 5); /* Set minimum size first */
-	terminal_resize(terminal, 80, 25);
 
 	wl_list_insert(terminal_list.prev, &terminal->link);
 
