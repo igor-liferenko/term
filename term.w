@@ -26,7 +26,6 @@
 #include "xalloc.h"
 #include "window.h"
 
-static int option_fullscreen;
 static char *option_font;
 static int option_font_size;
 int option_width;
@@ -864,24 +863,7 @@ resize_handler(struct widget *widget,
 
 	m = 2 * terminal->margin;
 	columns = option_width;
-#ifdef HOME
-	rows = 43;
-#elif NOTEBOOK
-	rows=30;
-#else
 	rows = (height - m) / (int32_t) terminal->extents.height;
-#endif
-
-#ifdef WORK
-	if (!window_is_fullscreen(terminal->window) &&
-	    !window_is_maximized(terminal->window)) {
-#endif
-		width = columns * terminal->average_width + m;
-		height = rows * terminal->extents.height + m;
-		widget_set_size(terminal->widget, width, height);
-#ifdef WORK
-	}
-#endif
 
 	terminal_resize_cells(terminal, columns, rows);
 	update_title(terminal);
@@ -900,9 +882,10 @@ terminal_resize(struct terminal *terminal, int columns, int rows)
 	int32_t width, height, m;
 
 	if (window_is_fullscreen(terminal->window) ||
-	    window_is_maximized(terminal->window))
+	    window_is_maximized(terminal->window)) {
+printf("gotcha\n");
 		return;
-
+}
 	m = 2 * terminal->margin;
 	width = columns * terminal->average_width + m;
 	height = rows * terminal->extents.height + m;
@@ -2257,14 +2240,6 @@ drop_handler(struct window *window, struct input *input,
 }
 
 static void
-fullscreen_handler(struct window *window, void *data)
-{
-	struct terminal *terminal = data;
-
-	window_set_fullscreen(window, !window_is_fullscreen(terminal->window));
-}
-
-static void
 close_handler(void *data)
 {
 	struct terminal *terminal = data;
@@ -2959,7 +2934,6 @@ terminal_create(struct display *display)
 	window_set_key_handler(terminal->window, key_handler);
 	window_set_keyboard_focus_handler(terminal->window,
 					  keyboard_focus_handler);
-	window_set_fullscreen_handler(terminal->window, fullscreen_handler);
 	window_set_output_handler(terminal->window, output_handler);
 	window_set_close_handler(terminal->window, close_handler);
 	window_set_state_changed_handler(terminal->window, state_changed_handler);
@@ -3074,22 +3048,12 @@ terminal_run(struct terminal *terminal, const char *path)
 	display_watch_fd(terminal->display, terminal->master,
 			 EPOLLIN | EPOLLHUP, &terminal->io_task);
 
-	if (option_fullscreen)
-		window_set_fullscreen(terminal->window, 1);
-	else
-#ifdef HOME
-		terminal_resize(terminal, option_width, 43);
-#elif NOTEBOOK
-                terminal_resize(terminal, option_width, 30);
-#else
-		terminal_resize(terminal, option_width, 24);
-#endif
+	window_set_fullscreen(terminal->window, 1);
 
 	return 0;
 }
 
 static const struct weston_option terminal_options[] = {
-	{ WESTON_OPTION_BOOLEAN, "fullscreen", 'f', &option_fullscreen },
 	{ WESTON_OPTION_STRING, "font", 0, &option_font },
 	{ WESTON_OPTION_INTEGER, "font-size", 0, &option_font_size },
 	{ WESTON_OPTION_STRING, "shell", 0, &option_shell },
@@ -3114,7 +3078,13 @@ int main(int argc, char *argv[])
 	config = weston_config_parse(config_file);
 	s = weston_config_get_section(config, "terminal", NULL, NULL);
 	weston_config_section_get_string(s, "font", &option_font, "mono");
-	weston_config_section_get_int(s, "font-size", &option_font_size, 14);
+#ifdef HOME
+	weston_config_section_get_int(s, "font-size", &option_font_size, 19);
+#elif NOTEBOOK
+	weston_config_section_get_int(s, "font-size", &option_font_size, 20);
+#else
+	weston_config_section_get_int(s, "font-size", &option_font_size, 30);
+#endif
 	weston_config_section_get_string(s, "term", &option_term, "xterm");
 	weston_config_section_get_int(s, "width", &option_width, 100);
 	weston_config_destroy(config);
@@ -3122,9 +3092,6 @@ int main(int argc, char *argv[])
 	if (parse_options(terminal_options,
 			  ARRAY_LENGTH(terminal_options), &argc, argv) > 1) {
 		printf("Usage: %s [OPTIONS]\n"
-		       "  --fullscreen or -f\n"
-		       "  --font=NAME\n"
-		       "  --font-size=SIZE\n"
 		       "  --shell=NAME\n", argv[0]);
 		return 1;
 	}
