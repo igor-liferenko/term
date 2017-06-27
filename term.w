@@ -3047,7 +3047,9 @@ int main(int argc, char *argv[])
 	weston_config_section_get_string(s, "font", &option_font, "mono");
 /* to get font size, search FONT SIZE in this file, uncomment it and empirically
    set font size here so that the output from "command term" will be as close to 100 as possible,
-   but not be less than 100 */
+   but not be less than 100
+TODO: try to automatically calculate font size based on this
+ */
 #ifdef HOME
 	weston_config_section_get_int(s, "font-size", &option_font_size, 19);
 #elif NOTEBOOK
