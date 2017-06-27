@@ -1,4 +1,4 @@
-WHERE=$(shell echo `/usr/local/bin/whereami` | tr [a-z] [A-Z])
+WHERE=$(shell echo `whereami` | tr [a-z] [A-Z])
 
 term: term.c
 	gcc -D$(WHERE) `pkg-config wayland-client --cflags --libs` -I$(shell ls -d /usr/local/src/weston-*/libweston) -I/usr/include/cairo -g -O2 -c -o term.o term.c
