@@ -864,7 +864,10 @@ resize_handler(struct widget *widget,
 	m = 2 * terminal->margin;
 	columns = option_width;
 	rows = (height - m) / (int32_t) terminal->extents.height;
-
+#if 1==0
+/* FONT SIZE */
+printf("%d\n", (width - m) / (int32_t) terminal->average_width);
+#endif
 	terminal_resize_cells(terminal, columns, rows);
 	update_title(terminal);
 }
@@ -3042,6 +3045,9 @@ int main(int argc, char *argv[])
 	config = weston_config_parse(config_file);
 	s = weston_config_get_section(config, "terminal", NULL, NULL);
 	weston_config_section_get_string(s, "font", &option_font, "mono");
+/* to get font size, search FONT SIZE in this file, uncomment it and empirically
+   set font size so that the printed value will be as close to 100 as possible,
+   but not exceed 100 */
 #ifdef HOME
 	weston_config_section_get_int(s, "font-size", &option_font_size, 19);
 #elif NOTEBOOK
