@@ -2990,25 +2990,35 @@ io_handler(struct task *task, uint32_t events)
 		terminal_data(terminal, buffer, len);
 }
 
+int newargc;
+char **newargv;
+
 static int
 terminal_run(struct terminal *terminal, const char *path)
 {
 	int master;
 	pid_t pid;
-
-	pid = forkpty(&master, NULL, NULL, NULL);
-	if (pid == 0) {
-		setenv("TERM", option_term, 1);
-		setenv("COLORTERM", option_term, 1);
-		if (execl(path, path, NULL)) {
-			printf("exec failed: %m\n");
-			exit(EXIT_FAILURE);
-		}
-	} else if (pid < 0) {
-		fprintf(stderr, "failed to fork and create pty (%m).\n");
-		return -1;
+	char *newpath;
+	if (newargv != NULL) {
+		newpath = malloc(strlen(newargv[0])+1);
+		strcpy(newpath,newargv[0]);
 	}
 
+        if ((pid = forkpty(&master, NULL, NULL, NULL)) < 0) {
+		@<Free |newargv|@>;
+                fprintf(stderr, "failed to fork and create pty (%m).\n");
+                return -1;
+        }
+        else if (pid == 0) {
+                        setenv("TERM", option_term, 1);
+                        setenv("COLORTERM", option_term, 1);
+			if (newargv == NULL) execl("/bin/bash", "/bin/bash", NULL);
+			else execv(newpath, newargv);
+                        printf("exec failed: %m\n");
+                        exit(EXIT_FAILURE);
+        }
+
+	@<Free |newargv|@>;
 	terminal->master = master;
 	fcntl(master, F_SETFL, O_NONBLOCK);
 	terminal->io_task.run = io_handler;
@@ -3020,6 +3030,15 @@ terminal_run(struct terminal *terminal, const char *path)
 	return 0;
 }
 
+@ @<Free |newargv|@>=
+if (newargv != NULL) {
+  free(newpath);
+  for (int i = 0; i < newargc - 1; i++)
+    free(newargv[i]);
+  free(newargv);
+}
+
+@ @c
 static const struct weston_option terminal_options[] = {
 	{ WESTON_OPTION_STRING, "font", 0, &option_font },
 	{ WESTON_OPTION_INTEGER, "font-size", 0, &option_font_size },
@@ -3061,12 +3080,7 @@ TODO: try to automatically calculate font size based on this
 	weston_config_section_get_int(s, "width", &option_width, 100);
 	weston_config_destroy(config);
 
-	if (parse_options(terminal_options,
-			  ARRAY_LENGTH(terminal_options), &argc, argv) > 1) {
-		printf("Usage: %s [OPTIONS]\n"
-		       "  --shell=NAME\n", argv[0]);
-		return 1;
-	}
+        @<Parse options@>;
 
 	d = display_create(&argc, argv);
 	if (d == NULL) {
@@ -3082,4 +3096,25 @@ TODO: try to automatically calculate font size based on this
 	display_run(d);
 
 	return 0;
+}
+
+@ @<Parse options@>=
+newargc = argc - 1 + 1;
+if (newargc >= 2)
+  if (strncmp("--width=",argv[1],8) == 0) {
+    if (sscanf(argv[1]+8,"%d",&option_width) != 1) {
+	printf("option error\x0a");
+	exit(1);
+    }
+    newargc = argc - 1 - 1 + 1;
+  }
+if (newargc == 1) newargv = NULL;
+else {
+  newargv = malloc(newargc * sizeof (char *));
+  int i, j;
+  for (i = 1 + (argc - newargc), j=0; i < argc; i++,j++) {
+    newargv[j]=malloc(strlen(argv[i])+1);
+    strcpy(newargv[j],argv[i]);
+  }
+  newargv[j]=NULL;
 }
