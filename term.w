@@ -3012,7 +3012,7 @@ terminal_run(struct terminal *terminal, const char *path)
         else if (pid == 0) {
                         setenv("TERM", option_term, 1);
                         setenv("COLORTERM", option_term, 1);
-			if (newargv == NULL) execl("/bin/bash", "/bin/bash", NULL);
+			if (newargv == NULL) execl("/bin/bash", "bash", (char *) NULL);
 			else execv(newpath, newargv);
                         printf("exec failed: %m\n");
                         exit(EXIT_FAILURE);
