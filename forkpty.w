@@ -24,8 +24,7 @@ int main()
         return 1;
     }
 
-    // child
-    else if (pid == 0) {
+    if (pid == 0) {
 
         char *args[] = { NULL };
 
@@ -33,8 +32,6 @@ int main()
         execvp("/usr/bin/bc", args);
     }
 
-    // parent
-    else {
         // remove the echo
         struct termios tios;
         tcgetattr(master, &tios);
@@ -86,6 +83,6 @@ int main()
                 write(master, &input, 1);
             }
         }
-    }
+
     return 0;
 }
