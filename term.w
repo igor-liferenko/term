@@ -3101,16 +3101,16 @@ TODO: try to automatically calculate font size based on this
 @ When \.{--width=80} is used, there cannot be any other options.
 
 @<Parse options@>=
-if (argc == 1) newargv = NULL;
-if (argc == 2)
-  if (strncmp("--width=",argv[1],8) == 0) {
-    if (sscanf(argv[1]+8,"%d",&option_width) != 1) {
-	printf("option error\x0a");
-	exit(1);
-    }
-    newargv = NULL;
+if (argc == 1) { newargv = NULL; goto done; }
+if (argc == 2 && strncmp("--width=",argv[1],8) == 0) {
+  if (sscanf(argv[1]+8,"%d",&option_width) != 1) {
+    printf("option error\x0a");
+    exit(1);
   }
-if (newargv != NULL) {
+  newargv = NULL;
+  goto done;
+}
+
   newargc = argc;
   newargv = malloc(newargc * sizeof (char *));
   int i, j;
@@ -3119,4 +3119,5 @@ if (newargv != NULL) {
     strcpy(newargv[j],argv[i]);
   }
   newargv[j]=NULL;
-}
+
+done:
