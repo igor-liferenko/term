@@ -1,0 +1,7 @@
+strace -o fail.strace /usr/local/bin/term /bin/sh
+
+...
+epoll_wait(4, [{EPOLLIN, {u32=4174290472, u64=93917929184808}}], 16, -1) = 1
+read(9, "$ ", 256)                      = 2
+--- SIGSEGV {si_signo=SIGSEGV, si_code=SEGV_MAPERR, si_addr=NULL} ---
++++ killed by SIGSEGV +++

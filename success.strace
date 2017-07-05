@@ -1,0 +1,61 @@
+strace -o success.strace /usr/local/bin/term /bin/sh -l
+
+...
+epoll_wait(4, [{EPOLLIN, {u32=674936792, u64=94202192639960}}], 16, -1) = 1
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\5\0\0\0\0\0\f\0\0\0\0\0\5\0\0\0\0\0\f\0\1\0\0\0\6\0\0\0\0\0004\0"..., iov_len=3408}, {iov_base="", iov_len=688}], msg_iovlen=2, msg_controllen=0, msg_flags=MSG_CMSG_CLOEXEC}, MSG_DONTWAIT|MSG_CMSG_CLOEXEC) = 220
+mmap(NULL, 413696, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f12a905f000
+mmap(NULL, 413696, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f12a43e9000
+ioctl(9, TIOCSWINSZ, {ws_row=30, ws_col=100, ws_xpixel=1920, ws_ypixel=1080}) = 0
+getpid()                                = 12506
+open("/run/user/1000/weston-shared-dzGBl2", O_RDWR|O_CREAT|O_EXCL|O_CLOEXEC, 0600) = 8
+unlink("/run/user/1000/weston-shared-dzGBl2") = 0
+fallocate(8, 0, 0, 8294400)             = 0
+mmap(NULL, 8294400, PROT_READ|PROT_WRITE, MAP_SHARED, 8, 0) = 0x7f12a3c00000
+fcntl(8, F_DUPFD_CLOEXEC, 0)            = 10
+close(8)                                = 0
+mmap(NULL, 8298496, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7f12a3416000
+munmap(0x7f12a3416000, 8298496)         = 0
+sendmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\n\0\0\0\0\0\f\0\22\0\0\0\n\0\0\0\1\0\f\0\23\0\0\0\20\0\0\0\4\0\f\0"..., iov_len=392}], msg_iovlen=1, msg_control=[{cmsg_len=20, cmsg_level=SOL_SOCKET, cmsg_type=SCM_RIGHTS, cmsg_data=[10]}], msg_controllen=20, msg_flags=0}, MSG_DONTWAIT|MSG_NOSIGNAL) = 392
+close(10)                               = 0
+epoll_wait(4, [{EPOLLIN, {u32=675233336, u64=94202192936504}}], 16, -1) = 1
+read(9, "$ ", 256)                      = 2
+epoll_wait(4, [{EPOLLIN, {u32=674936792, u64=94202192639960}}], 16, -1) = 1
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\23\0\0\0\0\0\20\0\1\0\0\0\323\316\0\0\23\0\0\0\5\0\20\0!\0\0\0\364\1\0\0"..., iov_len=3188}, {iov_base="", iov_len=908}], msg_iovlen=2, msg_control=[{cmsg_len=20, cmsg_level=SOL_SOCKET, cmsg_type=SCM_RIGHTS, cmsg_data=[8]}], msg_controllen=24, msg_flags=MSG_CMSG_CLOEXEC}, MSG_DONTWAIT|MSG_CMSG_CLOEXEC) = 64
+mmap(NULL, 52947, PROT_READ, MAP_SHARED, 8, 0) = 0x7f12a9052000
+brk(0x55ad2845e000)                     = 0x55ad2845e000
+brk(0x55ad2847f000)                     = 0x55ad2847f000
+brk(0x55ad284a0000)                     = 0x55ad284a0000
+munmap(0x7f12a9052000, 52947)           = 0
+close(8)                                = 0
+epoll_wait(4, [{EPOLLIN, {u32=674936792, u64=94202192639960}}], 16, -1) = 1
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\21\0\0\0\0\0\34\0\200\7\0\0008\4\0\0\10\0\0\0\2\0\0\0\4\0\0\0\20\0\0\0"..., iov_len=3124}, {iov_base="", iov_len=972}], msg_iovlen=2, msg_controllen=0, msg_flags=MSG_CMSG_CLOEXEC}, MSG_DONTWAIT|MSG_CMSG_CLOEXEC) = 196
+sendmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\20\0\0\0\4\0\f\0WO\0\0\21\0\0\0\2\0 \0\21\0\0\0Wayland "..., iov_len=44}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, MSG_DONTWAIT|MSG_NOSIGNAL) = 44
+epoll_wait(4, [{EPOLLIN, {u32=674936792, u64=94202192639960}}], 16, -1) = 1
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\17\0\0\0\0\0\f\0\6\0\0\0\30\0\0\0\0\0\f\0\345^e$\1\0\0\0\1\0\f\0"..., iov_len=2928}, {iov_base="", iov_len=1168}], msg_iovlen=2, msg_controllen=0, msg_flags=MSG_CMSG_CLOEXEC}, MSG_DONTWAIT|MSG_CMSG_CLOEXEC) = 36
+brk(0x55ad28c95000)                     = 0x55ad28c95000
+brk(0x55ad28cd5000)                     = 0x55ad28cd5000
+sendmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\17\0\0\0\7\0\f\0\0\0\0\0\17\0\0\0\10\0\f\0\1\0\0\0\4\0\0\0\1\0\f\0"..., iov_len=232}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, MSG_DONTWAIT|MSG_NOSIGNAL) = 232
+epoll_wait(4, [{EPOLLIN, {u32=674936792, u64=94202192639960}}], 16, -1) = 1
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\0\0\1\0\f\0\30\0\0\0\1\0\0\0\1\0\f\0\25\0\0\0\27\0\0\0\0\0\10\0"..., iov_len=2892}, {iov_base="", iov_len=1204}], msg_iovlen=2, msg_controllen=0, msg_flags=MSG_CMSG_CLOEXEC}, MSG_DONTWAIT|MSG_CMSG_CLOEXEC) = 56
+epoll_wait(4, [{EPOLLIN, {u32=674936792, u64=94202192639960}}], 16, -1) = 1
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\23\0\0\0\4\0\34\0[O\0\0@\0\10\0\0\0\0\0\0\0\0\0\0\0\0\0\23\0\0\0"..., iov_len=2836}, {iov_base="", iov_len=1260}], msg_iovlen=2, msg_controllen=0, msg_flags=MSG_CMSG_CLOEXEC}, MSG_DONTWAIT|MSG_CMSG_CLOEXEC) = 44
+timerfd_settime(6, 0, {it_interval={tv_sec=0, tv_nsec=0}, it_value={tv_sec=0, tv_nsec=0}}, NULL) = 0
+sendmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\17\0\0\0\3\0\f\0\24\0\0\0\17\0\0\0\1\0\24\0\27\0\0\0\0\0\0\0\0\0\0\0"..., iov_len=64}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, MSG_DONTWAIT|MSG_NOSIGNAL) = 64
+epoll_wait(4, [{EPOLLIN, {u32=674936792, u64=94202192639960}}], 16, -1) = 1
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\21\0\0\0\0\0\30\0\200\7\0\0008\4\0\0\4\0\0\0\2\0\0\0\20\0\0\0\0\0\f\0"..., iov_len=2792}, {iov_base="", iov_len=1304}], msg_iovlen=2, msg_controllen=0, msg_flags=MSG_CMSG_CLOEXEC}, MSG_DONTWAIT|MSG_CMSG_CLOEXEC) = 36
+sendmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\20\0\0\0\4\0\f\0^O\0\0\21\0\0\0\2\0 \0\21\0\0\0Wayland "..., iov_len=44}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, MSG_DONTWAIT|MSG_NOSIGNAL) = 44
+epoll_wait(4, [{EPOLLIN, {u32=674936792, u64=94202192639960}}], 16, -1) = 1
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\27\0\0\0\0\0\10\0\24\0\0\0\0\0\f\0\316ee$\1\0\0\0\1\0\f\0\24\0\0\0", iov_len=2756}, {iov_base="", iov_len=1340}], msg_iovlen=2, msg_controllen=0, msg_flags=MSG_CMSG_CLOEXEC}, MSG_DONTWAIT|MSG_CMSG_CLOEXEC) = 32
+sendmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\4\0\0\0\1\0\f\0\24\0\0\0\21\0\0\0\2\0 \0\21\0\0\0Wayland "..., iov_len=208}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, MSG_DONTWAIT|MSG_NOSIGNAL) = 208
+epoll_wait(4, [{EPOLLIN, {u32=674936792, u64=94202192639960}}], 16, -1) = 1
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\0\0\1\0\f\0\24\0\0\0\1\0\0\0\1\0\f\0\25\0\0\0\27\0\0\0\0\0\10\0"..., iov_len=2724}, {iov_base="", iov_len=1372}], msg_iovlen=2, msg_controllen=0, msg_flags=MSG_CMSG_CLOEXEC}, MSG_DONTWAIT|MSG_CMSG_CLOEXEC) = 56
+epoll_wait(4, 
