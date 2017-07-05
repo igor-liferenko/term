@@ -39,7 +39,7 @@ terminal_create(struct display *display);
 static void
 terminal_destroy(struct terminal *terminal);
 static int
-terminal_run(struct terminal *terminal, const char *path);
+terminal_run(struct terminal *terminal);
 
 @ @d TERMINAL_DRAW_SINGLE_WIDE_CHARACTERS
     " !\"#$%&'()*+,-./"
@@ -2245,7 +2245,7 @@ terminal_new_instance(struct terminal *terminal)
 	struct terminal *new_terminal;
 
 	new_terminal = terminal_create(terminal->display);
-	if (terminal_run(new_terminal, option_shell))
+	if (terminal_run(new_terminal))
 		terminal_destroy(new_terminal);
 }
 
@@ -2994,7 +2994,7 @@ int newargc;
 char **newargv;
 
 static int
-terminal_run(struct terminal *terminal, const char *path)
+terminal_run(struct terminal *terminal)
 {
 	int master;
 	pid_t pid;
@@ -3009,15 +3009,15 @@ terminal_run(struct terminal *terminal, const char *path)
                 fprintf(stderr, "failed to fork and create pty (%m).\n");
                 return -1;
         }
-        else if (pid == 0) {
+        if (pid == 0) {
+          /* we cannot print to standard output and standard error in child,
+             or we will get Segmentation fault (FIXME: understand why) */
                         setenv("TERM", option_term, 1);
                         setenv("COLORTERM", option_term, 1);
 			if (newargv == NULL) execl("/bin/bash", "bash", (char *) NULL);
 			else execv(newpath, newargv);
-                        printf("exec failed: %m\n");
                         exit(EXIT_FAILURE);
         }
-
 	@<Free |newargv|@>;
 	terminal->master = master;
 	fcntl(master, F_SETFL, O_NONBLOCK);
@@ -3090,7 +3090,7 @@ TODO: try to automatically calculate font size based on this
 
 	wl_list_init(&terminal_list);
 	terminal = terminal_create(d);
-	if (terminal_run(terminal, option_shell))
+	if (terminal_run(terminal))
 		exit(EXIT_FAILURE);
 
 	display_run(d);
