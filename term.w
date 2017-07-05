@@ -3011,7 +3011,9 @@ terminal_run(struct terminal *terminal)
         }
         if (pid == 0) {
           /* we cannot print to standard output and standard error in child,
-             or we will get Segmentation fault (FIXME: understand why) */
+             or we will get Segmentation fault (FIXME: understand why)
+HINT: compare "success.strace" - works OK, and "fail.strace" - segfaults
+ */
                         setenv("TERM", option_term, 1);
                         setenv("COLORTERM", option_term, 1);
 			if (newargv == NULL) execl("/bin/bash", "bash", (char *) NULL);
