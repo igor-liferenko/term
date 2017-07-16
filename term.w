@@ -3105,7 +3105,7 @@ TODO: try to automatically calculate font size based on this
 @<Parse options@>=
 if (argc == 1 || strncmp("--width=",argv[1],8) == 0) {
   if (argc != 1 && sscanf(argv[1]+8,"%d",&option_width) != 1) {
-    printf("option error\x0a");
+    printf("option error\n");
     exit(1);
   }
   newargv = NULL;
