@@ -26,10 +26,10 @@ int main()
 
     if (pid == 0) {
 
-        char *args[] = { NULL };
+        char *args[] = { "bc", NULL };
 
         // run the BC calculator
-        execvp("/usr/bin/bc", args);
+        execv("/usr/bin/bc", args);
     }
 
         // remove the echo
