@@ -1,5 +1,4 @@
 term
-forkpty
 *.o
 *.c
 *.dvi
