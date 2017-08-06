@@ -1,5 +1,3 @@
-# TODO: after reinstall switch to clang
-
 all:
 	@echo NoOp
 
