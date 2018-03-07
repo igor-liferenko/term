@@ -1,3 +1,0 @@
-implement -x option like in gnome-terminal and change last line in /usr/local/bin/gnome-terminal to exec term "${@:2:$#}" (via post-install.sh; and remove "-x" TODO from there also)
-make Ctrl+p et al. work in less's search prompt
-for copy-pastng see https://wayland.freedesktop.org/docs/html/ch04.html "Data sharing between clients"
