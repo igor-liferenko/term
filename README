@@ -1,1 +1,0 @@
-"term" does not build anymore because weston-egl-ext.h disappeared from debian
