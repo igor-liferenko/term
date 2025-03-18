@@ -1,6 +1,4 @@
 %&17pt
-% To read, comment \quire{...}, \pdfhorigin=-300pt and in \pdfvorigin change 1in to 1cm.
-% To set \quire, comment it and see number of pages.
 \input quire
 \shoutline=0pt
 \shstaplewidth=0pt
@@ -35,13 +33,14 @@
 
 \nopagenumbers
 
-\baselineskip=17pt
 \raggedbottom
 
 \topglue3cm
 {\chapfont 1}
 \vskip3cm
 
+\begingroup
+\baselineskip=17pt
 \newcount\n
 \everypar={\advance\n by1 \llap{\number\n.\enspace}\hang}
 \parskip=30pt
@@ -119,11 +118,7 @@
 
 И он ушёл своей дорогой сквозь толпу и оставил их, и вернулся к повседневному миру людей и машин.
 
-\everypar={}
-\rightskip=0pt \spaceskip=0pt \xspaceskip=0pt
-\normalbaselines
-\parskip=0pt plus1pt
-\rm
+\endgroup
 \vfil\eject
 
 \topglue3cm
