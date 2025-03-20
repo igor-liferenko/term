@@ -7,7 +7,7 @@ font_identifier:="LHDUNH"; font_size design_size * pt#;
 % The parameters of this font are a simple modification of Computer Modern Roman.
 
 input c-cmr;
-slant:=.25; % .17
+slant:=.25;
 body_height#:=             % height of tallest characters
   ((body_height#*360pt#) + (design_size*100))/360pt#;
 
