@@ -1,5 +1,6 @@
 %&17pt
 \output={\shipout\vbox{
+  \special{color push rgb 1 0 0}
   \vbox to0pt{
         \font\dingbat=./drmsym17 \dingbat
         \setbox0=\hbox{^^2b}
@@ -14,6 +15,7 @@
         \nointerlineskip
         \hbox{\kern-.5\dimen0^^3b\hbox{\leaders\hbox{^^4a}\hskip8\wd2}^^48}
         \vss}
+  \special{color pop}
   \nointerlineskip
   \kern.5cm
   \moveright.4cm\box255 }}
