@@ -1,0 +1,187 @@
+\newdimen\vorigin
+\newdimen\horigin
+\newdimen\vtotal
+\newdimen\htotal
+
+\newdimen\shvoffset
+\newdimen\shhtotal
+\newdimen\shthickness
+\newdimen\shvcorrection
+\newdimen\shhcorrection
+
+\newbox\stackbox % an hbox keeping the stacked boxes but one
+\newbox\stacktop % the topmost box
+
+\def\push#1% #1 = a box
+   {\global\setbox\stackbox=
+      \hbox{\unhbox\stackbox \box\stacktop}%
+    \global\setbox\stacktop=#1%
+   }
+
+\def\pop
+   {\global\setbox\stackbox=
+      \hbox{\unhbox\stackbox \global\setbox\stacktop=\lastbox}%
+   }
+
+\def\makepage#1% #1 = textpage, return = an hbox (\vtotal+0)*\htotal
+   {\hbox to\htotal
+         {\boxmaxdepth=0pt
+              \advance\vorigin by\voffset
+              \advance\horigin by\hoffset
+          \kern\horigin
+          \vbox to\vtotal
+               {\kern\vorigin
+                #1%
+                \vss
+               }%
+          \hss
+         }%
+   }
+
+\newdimen\thickoffset
+
+\def\doublepage#1#2% #1 and #2 are page boxes,
+     % return = vbox (\vtotal+0)*
+     %               (2(\htotal+\thickoffset))
+   {\vbox{\hbox{#1%
+                \kern\thickoffset
+                \kern\thickoffset
+                #2%
+               }%
+         }%
+   }
+
+\newcount\sheetnr
+\newcount\qnr
+
+\newif\ifrange
+
+\newbox\shipbox
+
+\def\collect
+   {\message{[(\the\count0)]}%
+    \global\advance\sheetnr by1 \checkrange
+    \ifrange
+         \push{\makepage{\box\shipbox}}%
+         \push{\hbox to\count0 sp{}}% dirty trick
+    \fi
+    \global\deadcycles=1
+    \ifnum\sheetnr=\goal
+         \global\thickoffset=0pt
+         \global\let\ship=\combine
+    \fi
+   }
+
+\def\combine
+   {{\ifrange
+          \count1=\wd\stacktop \pop % \firstpageno
+          \count2=\count0 % \secondpageno
+          \ifodd\sheetnr % stacktop is an odd page
+               \print{\makepage{\box\shipbox}}{\box\stacktop}%
+          \else\print{\box\stacktop}{\makepage{\box\shipbox}}%
+          \fi
+          \pop
+     \else\message{[(\the\count0)]}%
+     \fi
+     \ifodd\sheetnr\global\advance\thickoffset by\shthickness\fi
+     \global\advance\sheetnr by-1 \checkrange
+     \ifnum\sheetnr=0
+          \global\advance\qnr by\goal
+          \global\let\ship=\collect
+          \global\deadcycles=\cycles
+     \else\global\deadcycles=1
+     \fi
+   }}
+
+\def\print#1#2% two page boxes
+   {{\count0=\qnr \advance\count0 by\sheetnr
+     \setbox0=\hbox to\shhtotal
+                  {\hss
+                   \boxmaxdepth=0pt
+                   \vbox{\offinterlineskip
+                         \doublepage{#1}{#2}%
+                         \kern1pc
+                         \hbox{\kern\thickoffset
+                               \hbox to 2\htotal{}%
+                              }%
+                        }%
+                   \hss
+                  }%
+     \hoffset=-1truein % defeat the annoying 1 inch offset
+     \voffset=\shvoffset
+     \ifodd\count0
+          \advance\hoffset by\shhcorrection
+          \advance\voffset by\shvcorrection
+     \fi
+     \oldship\box0
+     \xdef\cycles{\the\deadcycles}%
+   }}
+
+\def\boat
+   {{\setbox255=\box\shipbox}% makes \shipbox void
+    \afterassignment\tstship
+    \global\setbox\shipbox= % \boat must be followed by a <box>
+   }
+
+\def\tstship
+   {\ifvoid\shipbox\aftergroup\ship
+    \else\ship
+    \fi
+   }
+
+\def\init
+   {\global\sheetnr=0\global\qnr=0
+    \global\let\oldship=\shipout
+    \global\let\shipout=\boat
+    \xdef\cycles{\the\deadcycles}%
+    \global\let\endquire=\endquire
+   }
+
+\def\makequire#1#2#3% #1 = nr of pages, #2 = first sheet, #3 = size of range
+   {{\count0=#1%
+     \advance\count0 by3 \divide\count0 by4 \multiply\count0 by2
+     \xdef\goal{\the\count0}%
+     \count0=#2%
+     \count1=#3\advance\count1 by\count0 \advance\count1 by-1
+     \let\nox=\noexpand
+     \xdef\checkrange
+         {\nox\ifnum \sheetnr < \the\count0
+              \nox\global\nox\rangefalse
+          \nox\else\nox\ifnum \the\count1 < \sheetnr
+              \nox\global\nox\rangefalse
+          \nox\else \nox\global\nox\rangetrue
+                    \nox\parity
+          \nox\fi\nox\fi
+         }%
+     \init
+     \global\let\ship=\collect
+   }}
+\def\parity{}
+
+\def\quire#1% #1 = nr of pages
+   {\makequire{#1}{0}{1000}%
+   }
+
+\def\endquire
+   {{\vfill\supereject
+     \loop
+     \ifnum\sheetnr>0 \shipout\vbox{}%
+     \repeat
+     \global\let\shipout=\oldship
+   }}
+
+\countdef\firstpageno=1
+\countdef\secondpageno=2
+
+\shhtotal=22in
+\shthickness=.2mm
+\shvcorrection=0pt
+\shhcorrection=0pt
+
+\shvoffset=0pt
+
+\vorigin=1in
+\horigin=1in
+
+\htotal=8.5in
+\vtotal=11in
