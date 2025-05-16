@@ -1,6 +1,5 @@
 %&12pt
 \magnification=\magstep2
-\advance\pdfvorigin by-2truecm
 \vsize=2\vsize
 
 \output={
@@ -9,10 +8,10 @@
   \else
     \shipout\vbox{
       \vbox to0pt{
-        \font\dingbat=dingbat at10truept \dingbat
+        \font\dingbat=dingbat at6.94pt \dingbat
         \setbox0=\hbox{^^61}
         \dimen0=24\wd0 \advance\dimen0-\hsize
-        \kern-.5cm
+        \kern-1.888cm
         \hbox{\kern-.5\dimen0^^61\hbox{\leaders\hbox{^^62}\hskip22\wd0}^^63}
         \nointerlineskip
         \vbox{\leaders\hbox{\kern-.5\dimen0^^64\hskip23\wd0^^65}\vskip37\ht0}
@@ -20,6 +19,7 @@
         \hbox{\kern-.5\dimen0^^66\hbox{\leaders\hbox{^^67}\hskip22\wd0}^^68}
         \vss}
       \nointerlineskip
+      \kern-1.388cm
       \moveright.5cm \vbox to18.5cm{\unvbox255\vss}
       \centerline{\font\ninerm=omr9 \ninerm\number\pageno}}
   \fi
