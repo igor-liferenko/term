@@ -22,15 +22,15 @@
     \vbox to\pdfpageheight{\kern\vorigin#1\vss}%
     \hss}}
 
-\newcount\sheetnr \sheetnr=0
+\newcount\sheetnr
 \newbox\shipbox
 
 \def\collect{%
     \push{\makepage{\box\shipbox}}%
     \global\deadcycles=1
     \global\advance\sheetnr by1
-    \ifnum\sheetnr=\count255
-         \global\let\ship=\combine
+    \ifnum\sheetnr=\goal
+         \global\let\out=\combine
     \fi}
 
 \def\combine{%
@@ -48,10 +48,11 @@
   \fi}
 
 \def\print#1#2{\oldship\hbox{#1#2}}
-\def\boat{\afterassignment\tstship\global\setbox\shipbox=}
-\def\tstship{\aftergroup\ship}
-\let\ship=\collect
+\def\newship{\afterassignment\ship\global\setbox\shipbox=}
+\def\ship{\aftergroup\out}
+\let\out=\collect
+\let\oldship=\shipout
 
 \def\quire#1{\count255=#1 \advance\count255 by3 \divide\count255 by4 \multiply\count255 by2
-  \let\oldship=\shipout
-  \let\shipout=\boat}
+  \edef\goal{\the\count255}
+  \let\shipout=\newship}
