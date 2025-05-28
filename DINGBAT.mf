@@ -1,0 +1,167 @@
+font_size=10pt#;
+mode_setup;
+uniform_square#:=20pt#;
+define_pixels(uniform_square);
+pickup pensquare scaled .4pt;
+bigpen:=savepen;
+pickup pensquare scaled 1.6pt;
+chunkypen:=savepen;
+"top-left";
+beginchar("a",uniform_square#,uniform_square#,0);
+ 
+x1=x2=good.x(1/10uniform_square);
+x3=x4=good.x(8/10uniform_square);
+x5=x8=good.x(uniform_square);
+x6=x7=good.x(4/10uniform_square);
+ 
+y1=y6=good.y(0);
+y2=y3=good.y(2/10uniform_square);
+y7=y8=good.y(6/10uniform_square);
+y4=y5=good.y(9/10uniform_square);
+ 
+pickup chunkypen;
+draw z1--z2--z3--z4--z5;
+pickup bigpen;
+draw z6--z7--z8;
+ 
+labels(range 1 thru 8);
+ 
+endchar;
+
+"top-middle";
+beginchar("b",uniform_square#,uniform_square#,0);
+ 
+x1=x3=good.x(0);
+x2=x4=good.x(uniform_square);
+ 
+y1=y2=good.y(9/10uniform_square);
+y3=y4=good.y(6/10uniform_square);
+ 
+pickup chunkypen;
+draw z1--z2;
+pickup bigpen;
+draw z3--z4;
+ 
+labels(1,2,3,4);
+ 
+endchar;
+
+"top-right";
+beginchar("c",uniform_square#,uniform_square#,0);
+ 
+x1=x6=good.x(0);
+x2=x3=good.x(2/10uniform_square);
+x7=x8=good.x(6/10uniform_square);
+x4=x5=good.x(9/10uniform_square);
+ 
+y1=y2=good.y(9/10uniform_square);
+y6=y7=good.y(6/10uniform_square);
+y3=y4=good.y(2/10uniform_square);
+y5=y8=good.y(0);
+ 
+pickup chunkypen;
+draw z1--z2--z3--z4--z5;
+pickup bigpen;
+draw z6--z7--z8;
+ 
+labels(range 1 thru 8);
+ 
+endchar;
+
+"middle-left";
+beginchar("d",uniform_square#,uniform_square#,0);
+ 
+x1=x2=good.x(1/10uniform_square);
+x3=x4=good.x(4/10uniform_square);
+y1=y3=good.y(0);
+y2=y4=good.y(uniform_square);
+ 
+pickup chunkypen;
+draw z1--z2;
+pickup bigpen;
+draw z3--z4;
+ 
+labels(1,2,3,4);
+ 
+endchar;
+
+"middle-right";
+beginchar("e",uniform_square#,uniform_square#,0);
+ 
+x1=x2=good.x(9/10uniform_square);
+x3=x4=good.x(6/10uniform_square);
+y1=y3=good.y(0);
+y2=y4=good.y(uniform_square);
+ 
+pickup chunkypen;
+draw z1--z2;
+pickup bigpen;
+draw z3--z4;
+ 
+labels(1,2,3,4);
+ 
+endchar;
+
+"bottom-left";
+beginchar("f",uniform_square#,uniform_square#,0);
+ 
+x1=x2=good.x(1/10uniform_square);
+x3=x4=good.x(8/10uniform_square);
+x5=x8=good.x(uniform_square);
+x6=x7=good.x(4/10uniform_square);
+ 
+y1=y6=good.y(uniform_square);
+y2=y3=good.y(8/10uniform_square);
+y7=y8=good.y(4/10uniform_square);
+y4=y5=good.y(1/10uniform_square);
+ 
+pickup chunkypen;
+draw z1--z2--z3--z4--z5;
+pickup bigpen;
+draw z6--z7--z8;
+ 
+labels(range 1 thru 8);
+ 
+endchar;
+
+"bottom-middle";
+beginchar("g",uniform_square#,uniform_square#,0);
+ 
+x1=x3=good.x(0);
+x2=x4=good.x(uniform_square);
+ 
+y1=y2=good.y(1/10uniform_square);
+y3=y4=good.y(4/10uniform_square);
+ 
+pickup chunkypen;
+draw z1--z2;
+pickup bigpen;
+draw z3--z4;
+ 
+labels(1,2,3,4);
+ 
+endchar;
+
+"bottom-right";
+beginchar("h",uniform_square#,uniform_square#,0);
+ 
+x1=x6=good.x(0);
+x2=x3=good.x(2/10uniform_square);
+x7=x8=good.x(6/10uniform_square);
+x4=x5=good.x(9/10uniform_square);
+ 
+y1=y2=good.y(1/10uniform_square);
+y6=y7=good.y(4/10uniform_square);
+y3=y4=good.y(8/10uniform_square);
+y5=y8=good.y(uniform_square);
+ 
+pickup chunkypen;
+draw z1--z2--z3--z4--z5;
+pickup bigpen;
+draw z6--z7--z8;
+ 
+labels(range 1 thru 8);
+ 
+endchar;
+
+bye
