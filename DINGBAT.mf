@@ -88,8 +88,10 @@ endchar;
 "middle-right";
 beginchar("e",uniform_square#,uniform_square#,0);
  
-x1=x2=good.x(9/10uniform_square);
-x3=x4=good.x(6/10uniform_square);
+x1=x2=good.x(9/10uniform_square)
+  -uniform_square; % to make the same as in dingbat.mf
+x3=x4=good.x(6/10uniform_square)
+  -uniform_square; % to make the same as in dingbat.mf
 y1=y3=good.y(0);
 y2=y4=good.y(uniform_square);
  
