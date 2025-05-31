@@ -15,9 +15,13 @@
 \quire{4}
 
 \horigin=4.5mm
+\hsize=\htotal \advance\hsize by-2\horigin \advance\hsize by-10mm % additional width for inner margin
+\dimen0=\htotal \advance\dimen0 by-\hsize \advance\dimen0 by-\horigin \horigin=\dimen0
+\hoffset=\htotal \advance\hoffset-\hsize \advance\hoffset-2\horigin
 \vorigin=2.5mm
-\hsize=\htotal \advance\hsize by-2\horigin
 \vsize=\vtotal \advance\vsize by-8mm
+
+\output={\ifodd\pageno\hoffset=0pt\fi \plainoutput}
 
 \font\chapfont=omr10 at45pt
 \font\handfont=omss17
