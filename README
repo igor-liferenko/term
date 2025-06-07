@@ -1,0 +1,16 @@
+Examples of using quire.tex
+
+If this is used, margin size changes when number of pages changes, which means text may
+fall-off from printable area;
+if we keep margin size fixed, \hsize changes when number of pages changes, which influences
+line and page breaking of all document.
+If document is finished, \shthickness may be used, but side lines to cut protruding pages
+can't be printed because they are too close to sheet border, outside of printable area;
+if you use this case, temorarily comment \errmessage line above.
+\shthickness is not needed at all if we cut each sheet into 2 halves and use binding or
+wire spiral, instead of just folding each sheet and using staples.
+
+Значение \shthickness в документе не должно быть 0pt (по умоланию 0.2mm) только
+когда
+изменение \hsize не влияет на количество страниц (например, стихи.tex).
+В остальных случаях значение должно быть 0pt (например, иллюзии.tex).
