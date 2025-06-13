@@ -1,16 +1,22 @@
 Examples of using quire.tex
 
-If this is used, margin size changes when number of pages changes, which means text may
-fall-off from printable area;
-if we keep margin size fixed, \hsize changes when number of pages changes, which influences
-line and page breaking of all document.
-If document is finished, \shthickness may be used, but side lines to cut protruding pages
-can't be printed because they are too close to sheet border, outside of printable area;
-if you use this case, temorarily comment \errmessage line above.
-\shthickness is not needed at all if we cut each sheet into 2 halves and use binding or
-wire spiral, instead of just folding each sheet and using staples.
+If \shthickness=non-zero is used, margin size changes when number of pages changes, which
+means text may fall-off from printable area.
+Therefore, we keep margin size fixed, but this makes \hsize depend on number of pages,
+which influences line and page breaking throughout a document.
+From this it follows that
+it is safe to use \shthickness=non-zero when changing \hsize a little does not influence
+number of pages, like in стихи.tex
+If it is not safe, use \shthickness=non-zero only when a document is finished,
+and then comment line 238 in quire.tex temporarily and see number of pages NUM which running
+of tex produces and add this after setting \hsize:
+    \dimen0=\shthickness \multiply\dimen0 by 1/4NUM
+    \horigin=\htotal \advance\horigin by-\hsize \advance\horigin by-\dimen0
+    \divide\horigin by2 \advance\horigin by\dimen0
+BUT then \hsize needs to be re-calculated, BUT then \horigin
+needs to be re-calculated, BUT then \hsize needs to be re-calculated, etc.
+I do not know how to deal with this, so use only safe method, or do not use staples (see below)
 
-Значение \shthickness в документе не должно быть 0pt (по умоланию 0.2mm) только
-когда
-изменение \hsize не влияет на количество страниц (например, стихи.tex).
-В остальных случаях значение должно быть 0pt (например, иллюзии.tex).
+\shthickness=0pt is used if we do not use staples (see иллюзии.tex)
+
+In any case, use \shthickness=0pt and \quire{4} until document is completed
