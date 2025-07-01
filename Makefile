@@ -1,2 +1,2 @@
 all:
-	@mf '\mode=localfont; input DINGBAT'
+	@mf '\mode=localfont; input DINGBAT' >/dev/null
