@@ -1,5 +1,5 @@
-font_size=10pt#;
 mode_setup;
+font_size=10pt#;
 uniform_square#:=20pt#;
 define_pixels(uniform_square);
 pickup pensquare scaled .4pt;
