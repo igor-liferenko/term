@@ -17,11 +17,12 @@
 \shthickness=0pt
 \quire{4} % it makes no sense to set number of pages because pages will be cut
 
-\horigin=4.5mm % outer margin
-\hsize=\htotal \advance\hsize by-2\horigin \advance\hsize by-0mm % additional width for inner margin
-\dimen0=\htotal \advance\dimen0 by-\hsize \advance\dimen0 by-\horigin \horigin=\dimen0
-\hoffset=\htotal \advance\hoffset-\hsize \advance\hoffset-2\horigin
+\horigin=4.5mm
+\hoffset=-0mm
+\hsize=\htotal \advance\hsize by-2\horigin \advance\hsize by\hoffset
+\advance\horigin by-\hoffset
 \output={\ifodd\pageno\hoffset=0pt\fi \plainoutput}
+
 \vorigin=2.5mm
 \vsize=\vtotal \advance\vsize by-8mm
 

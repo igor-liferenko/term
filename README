@@ -20,3 +20,5 @@ I do not know how to deal with this, so use only safe method, or do not use stap
 \shthickness=0pt is used if we do not use staples (see иллюзии.tex)
 
 In any case, use \shthickness=0pt and \quire{4} until document is completed
+
+NOTE: seems considerations about \shthickness=non-zero above are not quite correct - see TODO in стихи.tex

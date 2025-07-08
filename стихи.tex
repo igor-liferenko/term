@@ -16,10 +16,13 @@
 \quire{60}
 
 \horigin=15mm
-\vorigin=25mm
 \hsize=.5\pdfpagewidth \advance\hsize by-2\horigin
+\advance\horigin by15\shthickness % TODO: this \horigin must be on innermost page -
+                                  % by the time it reaches outermost page, it must gradually
+                                  % decrease to 18mm; maybe change \horigin in output routine?
 \advance\hsize by-15\shthickness
-\advance\horigin by15\shthickness
+
+\vorigin=25mm
 \vsize=2\vsize
 
 \output={
