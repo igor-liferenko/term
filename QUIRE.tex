@@ -5,8 +5,8 @@
 %
 % We need to keep margin size fixed. Therefore, we make \hsize depend on number of
 % pages (see README). But when we do this, a bug in quire.tex exhibits itself.
-% Output of test_quire.tex demonstrates the bug.
-% On the contrary, output of test_QUIRE.tex is correct.
+% Output of test_quire.tex demonstrates the bug (even pages are correct, odd pages
+% are incorrect). On the contrary, output of test_QUIRE.tex is correct.
 
 \input quire
 \catcode`_=11
