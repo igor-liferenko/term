@@ -1,6 +1,3 @@
-This repo contains QUIRE.tex - a modification to quire.tex
-To understand what it does, compare output of test_quire.tex and test_QUIRE.tex
-
 Add this after setting \hsize in each document using QUIRE.tex:
     {\catcode`_=11
       \count255=\q_goal \divide\count255 by2 \advance\count255 by-1
