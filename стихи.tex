@@ -4,7 +4,7 @@
 \pdfpageheight=210mm
 \pdfhorigin=1in
 \pdfvorigin=0pt
-\input quire
+\input QUIRE
 \shhtotal=\pdfpagewidth
 \htotal=.5\shhtotal
 \vtotal=\pdfpageheight
@@ -16,14 +16,14 @@
 \quire{60}
 
 \horigin=15mm
-\hsize=.5\pdfpagewidth \advance\hsize by-2\horigin
-\advance\horigin by15\shthickness % TODO: this \horigin must be on innermost page -
-                                  % by the time it reaches outermost page, it must gradually
-                                  % decrease to 18mm; maybe change \horigin in output routine?
-\advance\hsize by-15\shthickness
+\hsize=\htotal \advance\hsize by-2\horigin
+{\catcode`_=11
+  \count255=\q_goal \divide\count255 by2 \advance\count255 by-1
+  \dimen0=\shthickness \multiply\dimen0 by\count255
+  \global\advance\hsize by-\dimen0}
 
 \vorigin=25mm
-\vsize=2\vsize
+\vsize=2\vsize % some large value to avoid ??? (see git log -p)
 
 \output={
   \ifnum\outputpenalty=-10001
