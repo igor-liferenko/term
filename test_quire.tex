@@ -1,0 +1,39 @@
+%&12pt
+\pdfpagewidth=297mm
+\pdfpageheight=210mm
+\pdfhorigin=1in
+\pdfvorigin=0pt
+\input quire
+\shhtotal=\pdfpagewidth
+\htotal=.5\shhtotal
+\vtotal=\pdfpageheight
+\shoutline=0pt
+\shstaplewidth=0pt
+\shcrop=0pt
+\shfootline={}
+\shthickness=20mm
+\quire{12}
+
+\horigin=20mm
+\hsize=\htotal \advance\hsize by-2\horigin
+{\catcode`_=11
+  \count255=\q_goal \divide\count255 by2 \advance\count255 by-1
+  \dimen0=\shthickness \multiply\dimen0 by\count255
+  \global\advance\hsize by-\dimen0}
+
+\vorigin=20mm
+\vsize=\vtotal \advance\vsize by-2\vorigin
+
+\def\X{\shipout\vbox{
+  \hrule height.4pt
+  \kern-.4pt
+  \vbox to0pt{\hrule width.4pt height\vsize \vss}
+  \nointerlineskip
+  \hbox to\hsize{\hbox to0pt{\kern2pt\the\pageno\hss}\hss \vrule width.4pt height\vsize}
+  \nointerlineskip
+  \kern-.4pt
+  \hrule height.4pt}\advance\pageno by1 }
+
+\X\X\X\X\X\X\X\X\X\X\X\X
+
+\bye
