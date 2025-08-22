@@ -22,7 +22,8 @@
   \global\advance\hsize by-\dimen0}
 
 \vorigin=25mm
-\vsize=2\vsize % some large value to avoid ??? (see git log -p)
+\vsize=2\vsize % some large value (this allows to leave blank line before \eject instead of line with '%'
+               % for more beauty - we set vertical size via '\vbox to185mm{...\vss}' instead)
 
 \output={
   \ifnum\outputpenalty=-10001
