@@ -1,0 +1,23 @@
+\input quire
+\catcode`_=11
+\def\q_makepage#1% #1 = textpage, return = an hbox (\vtotal+0)*\htotal
+   {\hbox to\htotal
+	 {\boxmaxdepth=0pt
+    	  \advance\vorigin by\voffset
+    	  \advance\horigin by\hoffset
+% begin change
+          \count255=\q_goal \divide\count255 by2 \advance\count255 by-1
+          \dimen0=\shthickness \multiply\dimen0 by\count255
+          \ifodd\q_sheetnr\ifx\q_ship\q_combine\advance\horigin by\dimen0 \fi\else
+            \ifx\q_ship\q_collect\advance\horigin by\dimen0 \fi\fi
+% end change
+          \kern\horigin
+          \vbox to\vtotal
+	       {\kern\vorigin
+                #1%
+		\vss
+	       }%
+          \hss
+	 }%
+   }
+\catcode`_=12
