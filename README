@@ -1,24 +1,11 @@
-Examples of using quire.tex
+This repo contains QUIRE.tex - a modification to quire.tex
+To understand what it does, compare output of test_quire.tex and test_QUIRE.tex
 
-If \shthickness=non-zero is used, margin size changes when number of pages changes, which
-means text may fall-off from printable area.
-Therefore, we keep margin size fixed, but this makes \hsize depend on number of pages,
-which influences line and page breaking throughout a document.
-From this it follows that
-it is safe to use \shthickness=non-zero when changing \hsize a little does not influence
-number of pages, like in стихи.tex
-If it is not safe, use \shthickness=non-zero only when a document is finished,
-and then comment line 238 in quire.tex temporarily and see number of pages NUM which running
-of tex produces and add this after setting \hsize:
-    \dimen0=\shthickness \multiply\dimen0 by 1/4NUM
-    \horigin=\htotal \advance\horigin by-\hsize \advance\horigin by-\dimen0
-    \divide\horigin by2 \advance\horigin by\dimen0
-BUT then \hsize needs to be re-calculated, BUT then \horigin
-needs to be re-calculated, BUT then \hsize needs to be re-calculated, etc.
-I do not know how to deal with this, so use only safe method, or do not use staples (see below)
-
-\shthickness=0pt is used if we do not use staples (see иллюзии.tex)
-
-In any case, use \shthickness=0pt and \quire{4} until document is completed
-
-NOTE: seems considerations about \shthickness=non-zero above are not quite correct - see TODO in стихи.tex
+Add this after setting \hsize in each document using QUIRE.tex:
+    {\catcode`_=11
+      \count255=\q_goal \divide\count255 by2 \advance\count255 by-1
+      \dimen0=\shthickness \multiply\dimen0 by\count255
+      \global\advance\hsize by-\dimen0}
+Use \shthickness=0pt and \quire{4} until document is completed.
+After document is completed, use \shthickness=.27mm
+After connecting the pages with thread and needle, cut protruding parts of pages.
