@@ -4,7 +4,7 @@
 % Output of test.tex demonstrates this.
 %
 % We want to avoid that. Therefore, we make \hsize depend on number of
-% pages (see README). But when we do this, a bug in quire.tex exhibits itself.
+% pages. But when we do this, a bug in quire.tex exhibits itself.
 % Output of test_quire.tex demonstrates the bug (even pages are correct, odd pages
 % are incorrect). On the contrary, output of test_QUIRE.tex is correct.
 
@@ -13,6 +13,14 @@
 \catcode`_=11
 
 \newdimen\QUIRE
+
+\def\quire#1% #1 = nr of pages
+   {\makequire{#1}{0}{1000}%
+% begin change
+    \count255=\q_goal \divide\count255 by2 \advance\count255 by-1
+    \QUIRE=\shthickness \multiply\QUIRE by\count255
+% end change
+   }
 
 \def\q_makepage#1% #1 = textpage, return = an hbox (\vtotal+0)*\htotal
    {\hbox to\htotal
@@ -31,14 +39,6 @@
 	       }%
           \hss
 	 }%
-   }
-
-\def\quire#1% #1 = nr of pages
-   {\makequire{#1}{0}{1000}%
-% begin change
-    \count255=\q_goal \divide\count255 by2 \advance\count255 by-1
-    \QUIRE=\shthickness \multiply\QUIRE by\count255
-% end change
    }
 
 \catcode`_=12
