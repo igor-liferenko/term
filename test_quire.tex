@@ -14,8 +14,15 @@
 \shthickness=20mm
 \quire{12}
 
+\newdimen\QUIRE
+{\catcode`_=11
+  \count255=\q_goal \divide\count255 by2 \advance\count255 by-1
+  \QUIRE=\shthickness \global\multiply\QUIRE by\count255}
+
 \horigin=20mm
 \hsize=\htotal \advance\hsize by-2\horigin
+\advance\hsize by-\QUIRE
+
 {\catcode`_=11
   \count255=\q_goal \divide\count255 by2 \advance\count255 by-1
   \dimen0=\shthickness \multiply\dimen0 by\count255
