@@ -16,10 +16,7 @@
 
 \horigin=15mm
 \hsize=\htotal \advance\hsize by-2\horigin
-{\catcode`_=11
-  \count255=\q_goal \divide\count255 by2 \advance\count255 by-1
-  \dimen0=\shthickness \multiply\dimen0 by\count255
-  \global\advance\hsize by-\dimen0}
+\advance\hsize by-\QUIRE
 
 \vorigin=25mm
 \vsize=2\vsize % some large value (this allows to leave blank line before \eject instead of line with '%'

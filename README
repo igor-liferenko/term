@@ -1,8 +1,5 @@
 Add this after setting \hsize in each document using QUIRE.tex:
-    {\catcode`_=11
-      \count255=\q_goal \divide\count255 by2 \advance\count255 by-1
-      \dimen0=\shthickness \multiply\dimen0 by\count255
-      \global\advance\hsize by-\dimen0}
+    \advance\hsize by-\QUIRE
 Use \shthickness=0pt and \quire{4} until document is completed.
 After document is completed, use \shthickness=.27mm
 After connecting the pages with thread and needle, cut protruding parts of pages.
