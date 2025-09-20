@@ -2,11 +2,8 @@
 % of pages changes, which means text will not be aligned across pages (and text may
 % fall-off from printable area when number of pages is large enough).
 % Output of test.tex demonstrates this.
-%
 % We want to avoid that. Therefore, we make \hsize depend on number of
-% pages. But when we do this, a bug in quire.tex exhibits itself.
-% Output of test_quire.tex demonstrates this (even pages are correct, odd pages
-% are incorrect). On the contrary, output of test_QUIRE.tex is correct.
+% pages. Output of test_QUIRE.tex demonstrates this.
 
 \input quire
 
@@ -20,25 +17,6 @@
     \count255=\q_goal \divide\count255 by2 \advance\count255 by-1
     \QUIRE=\shthickness \multiply\QUIRE by\count255
 % end change
-   }
-
-\def\q_makepage#1% #1 = textpage, return = an hbox (\vtotal+0)*\htotal
-   {\hbox to\htotal
-	 {\boxmaxdepth=0pt
-    	  \advance\vorigin by\voffset
-    	  \advance\horigin by\hoffset
-% begin change
-          \ifodd\q_sheetnr\ifx\q_ship\q_combine\advance\horigin by\QUIRE \fi\else
-                          \ifx\q_ship\q_collect\advance\horigin by\QUIRE \fi\fi
-% end change
-          \kern\horigin
-          \vbox to\vtotal
-	       {\kern\vorigin
-                #1%
-		\vss
-	       }%
-          \hss
-	 }%
    }
 
 \catcode`\_=12

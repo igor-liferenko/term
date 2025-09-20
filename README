@@ -1,5 +1,8 @@
-Add this after setting \hsize in each document using QUIRE.tex:
+In each document using QUIRE.tex add this after setting \hsize:
     \advance\hsize by-\QUIRE
+and this to output routine:
+    \ifodd\pageno\else\hoffset=\QUIRE\fi
+
 Use \shthickness=0pt and \quire{4} until document is completed.
 After document is completed, use \shthickness=.27mm
 After connecting the pages with thread and needle, cut protruding parts of pages.

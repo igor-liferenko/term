@@ -23,6 +23,7 @@
                % for more beauty - we set vertical size via '\vbox to185mm{...\vss}' instead)
 
 \output={
+  \ifodd\pageno\else\hoffset=\QUIRE\fi
   \ifnum\outputpenalty=-10001
     \shipout\vbox{\unvbox255\vss}
   \else
