@@ -3,5 +3,5 @@ In each document using QUIRE.tex add this after setting \hsize:
 and this to output routine:
     \ifodd\pageno\else\hoffset=\QUIRE\fi
 
-Use \shthickness=.27mm
+Until document is completed, use '\qtwopages \shipout\vbox{}' instead of '\quire{...}'
 After connecting the pages with thread and needle, cut protruding parts of pages.
