@@ -16,15 +16,12 @@
 \quire{12}
 
 \horigin=20mm
-\hoffset=0pt
-\hsize=\htotal \advance\hsize by-2\horigin \advance\hsize by-\hoffset
+\hsize=\htotal \advance\hsize by-2\horigin
 
 \vorigin=20mm
 \vsize=\vtotal \advance\vsize by-2\vorigin
 
 \def\X{%
-  \begingroup
-  \ifodd\pageno\else\hoffset=0pt\fi
   \shipout\vbox{
   \hrule height.4pt
   \kern-.4pt
@@ -34,7 +31,6 @@
   \nointerlineskip
   \kern-.4pt
   \hrule height.4pt}%
-  \endgroup
   \advance\pageno by1 }
 
 \X\X\X\X\X\X\X\X\X\X\X\X
