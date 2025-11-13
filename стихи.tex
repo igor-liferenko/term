@@ -47,11 +47,16 @@
   \fi
   \global\advance\pageno by 1}
 
-\shipout\vbox{}
-\shipout\vbox{}
-\pageno=3
-
 \font\titlefont=omssdc10 at27.778pt
+
+\topglue 4cm
+\moveright2cm\hbox{\titlefont СЕМЁН ИВАНОВИЧ}
+\kern20pt
+\moveright2cm\hbox{\titlefont САФРОНЕНКОВ}
+\kern60pt
+\moveright3cm\hbox{\font\F=omssdc10 at20pt \F сборник стихов}
+\vfil\penalty-10001
+\line{}\vfil\penalty-10001
 
 {\catcode`\^^M=\active
 \gdef\title#1^^M{{\bf#1}\par}
