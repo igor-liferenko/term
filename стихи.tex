@@ -3,7 +3,7 @@
 \pdfpageheight=210mm
 \pdfhorigin=1in
 \pdfvorigin=0pt
-\input QUIRE
+\input quire
 \shhtotal=\pdfpagewidth
 \htotal=.5\shhtotal
 \vtotal=\pdfpageheight
@@ -11,12 +11,11 @@
 \shstaplewidth=0pt
 \shcrop=0pt
 \shfootline={}
-\shthickness=.27mm
+\shthickness=0pt
 \quire{60}
 
 \horigin=15mm
 \hsize=\htotal \advance\hsize by-2\horigin
-\advance\hsize by-\QUIRE
 
 \vorigin=25mm
 \vsize=2\vsize % some large value (this allows to leave blank line before \eject instead of line
@@ -24,7 +23,6 @@
                % instead)
 
 \output={
-  \ifodd\pageno\else\hoffset=\QUIRE\fi
   \ifnum\outputpenalty=-10001
     \shipout\vbox{\unvbox255\vss}
   \else
