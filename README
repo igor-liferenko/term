@@ -4,8 +4,3 @@ and this to output routine:
     \ifodd\pageno\else\hoffset=\QUIRE\fi
 
 Connect the pages with thread and needle by making 5 holes and cut protruding parts of pages.
-
-------------------------
-
-QUIRE.tex is used here just as a demo - because стихи.tex does not have too much pages
-(if there are too much pages, there will be a big gap between central pages).
