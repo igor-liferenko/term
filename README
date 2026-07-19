@@ -1,0 +1,5 @@
+We use \input QUIRE, \shthickness=non-zero and
+add this after setting \hsize:
+    \advance\hsize by-\QUIRE
+and this to output routine:
+    \ifodd\pageno\else\hoffset=\QUIRE\fi
