@@ -1,5 +1,6 @@
-We use \input QUIRE, \shthickness=non-zero and
-add this after setting \hsize:
+We add this after setting \hsize:
     \advance\hsize by-\QUIRE
 and this to output routine:
     \ifodd\pageno\else\hoffset=\QUIRE\fi
+
+Connect the pages with thread and needle by making 5 holes and cut protruding parts of pages.
