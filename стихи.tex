@@ -17,11 +17,11 @@
 \hsize=\htotal \advance\hsize by-2\horigin
 
 \vorigin=25mm
-\vsize=185mm
+\vsize=187mm
 
 \output={
   \ifnum\outputpenalty=-10001
-    \shipout\vbox{\unvbox255\vss}
+    \shipout\box255
   \else
     \shipout\vbox{
       \vbox to0pt{
@@ -38,6 +38,7 @@
       \nointerlineskip
       \kern-13.88mm
       \moveright5mm \box255
+      \kern-5pt
       \centerline{\font\ninerm=omr9 \ninerm\number\pageno}}
   \fi
   \global\advance\pageno by 1}
@@ -51,12 +52,12 @@
 \kern60pt
 \moveright3cm\hbox{\font\F=omssdc10 at20pt \F сборник стихов}
 \vfil\penalty-10001
-\line{}\vfil\penalty-10001
+\line{}\penalty-10001
 
 {\catcode`\^^M=\active
 \gdef\title#1^^M{{\bf#1}\par}
 \gdef\date#1^^M{\hbox to10cm{\hss\it#1}}}
-\def\par{\futurelet\a\b} \def\b{\ifx\a\eject\else\leavevmode\endgraf\fi}
+\def\par{\leavevmode\endgraf}
 \parskip=0pt
 \obeylines \let\par=\endgraf
 
